@@ -13,7 +13,9 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        $items = Item::leftJoin('users', 'users.id', '=', 'items.user_id')->where('user_id', Auth::id())->get();
+        $items = Item::leftJoin('users', 'users.id', '=', 'items.user_id')
+            ->select('items.id', 'items.nombre', 'items.cantidad', 'items.precio', 'items.descripcion', 'users.name', 'items.user_id')
+            ->get();
         return view('items.index', compact('items'));
     }
 
@@ -45,7 +47,7 @@ class ItemsController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->route('items.index')->with('success', 'Item creado exitosamente.');
+        return redirect()->route('items.index')->with('success', 'Producto creado exitosamente.');
     }
 
     /**
@@ -53,7 +55,6 @@ class ItemsController extends Controller
      */
     public function show(Item $item)
     {
-        //$this->authorize('view', $item);
         return view('items.show', compact('item'));
     }
 
@@ -62,7 +63,10 @@ class ItemsController extends Controller
      */
     public function edit(Item $item)
     {
-        //$this->authorize('update', $item);
+        if ($item->user_id !== Auth::id()) {
+            return redirect()->route('items.index')->with('error', 'No tienes los permisos para poder modificar este producto.');
+        }
+
         return view('items.edit', compact('item'));
     }
 
@@ -71,7 +75,9 @@ class ItemsController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        //$this->authorize('update', $item);
+        if ($item->user_id !== Auth::id()) {
+            return redirect()->route('items.index')->with('error', 'No tienes los permisos para poder modificar este producto.');
+        }
 
         $request->validate([
             'nombre' => 'required|string|max:255',
@@ -81,7 +87,7 @@ class ItemsController extends Controller
         ]);
 
         $item->update($request->only(['nombre', 'descripcion', 'cantidad', 'precio']));
-        return redirect()->route('items.index')->with('success', 'Item actualizado exitosamente.');
+        return redirect()->route('items.index')->with('success', 'Producto actualizado exitosamente.');
     }
 
     /**
@@ -89,8 +95,11 @@ class ItemsController extends Controller
      */
     public function destroy(Item $item)
     {
-        //$this->authorize('delete', $item);
+        if ($item->user_id !== Auth::id()) {
+            return redirect()->route('items.index')->with('error', 'No tienes los permisos para poder eliminar este producto.');
+        }
+
         $item->delete();
-        return redirect()->route('items.index')->with('success', 'Item eliminado exitosamente.');
+        return redirect()->route('items.index')->with('success', 'Producto eliminado exitosamente.');
     }
 }

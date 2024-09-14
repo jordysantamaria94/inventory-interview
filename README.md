@@ -1,66 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Inventario -  Jordy Santamaria
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este es un proyecto de inventario construido con Laravel 11. Incluye un CRUD para la gestión de productos y autenticación.
 
-## About Laravel
+## Requisitos Previos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Antes de comenzar, asegúrate de tener las siguientes herramientas instaladas en tu máquina:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Composer](https://getcomposer.org/)
+- [PHP 8.1+](https://www.php.net/downloads.php)
+- [Node.js & npm](https://nodejs.org/en/download/)
+- [Git](https://git-scm.com/)
+- [SQLite](https://www.sqlite.org/download.html)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Instalación
 
-## Learning Laravel
+Sigue estos pasos para configurar el proyecto localmente:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Clonar el Repositorio
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```bash
+git clone https://github.com/jordysantamaria94/inventory-interview.git
+cd proyecto-inventario
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Instalar Dependencias de PHP
 
-## Laravel Sponsors
+Instala las dependencias de Composer ejecutando el siguiente comando:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+composer install
+```
 
-### Premium Partners
+### 3. Configurar Variables de Entorno
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+cp .env.example .env
+```
 
-## Contributing
+Genera la clave de la aplicación de Laravel:
+```bash
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Configurar la Base de Datos
 
-## Code of Conduct
+Edita el archivo .env para configurar tu base de datos. Por defecto, el proyecto usa SQLite, pero puedes configurarlo para usar MySQL u otro sistema de base de datos. Ejemplo para SQLite:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+DB_CONNECTION=sqlite
+DB_DATABASE=/database/database.sqlite
+```
 
-## Security Vulnerabilities
+### 5. Crear la Base de Datos
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+touch database/database.sqlite
+```
 
-## License
+### 6. Ejecutar Migraciones y Seeders
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Ejecuta las migraciones para crear las tablas en la base de datos:
+
+```bash
+php artisan migrate
+```
+
+### 7. Instalar Dependencias de Node.js
+
+Instala las dependencias de Node.js necesarias para el frontend:
+
+```bash
+npm install
+```
+
+### 8. Compilar Assets
+
+Compila los assets de frontend usando Laravel Mix:
+
+```bash
+npm run dev
+```
+
+### 9. Iniciar el Servidor
+
+Inicia el servidor de desarrollo de Laravel:
+
+```bash
+php artisan serve
+```
+
+Por defecto, esto iniciará el servidor en http://127.0.0.1:8000. Puedes acceder a esta URL en tu navegador web.
+
+### Comandos Útiles
+
+#### Ejecutar pruebas:
+```bash
+php artisan test
+```
+
+#### Ejecutar migraciones:
+```bash
+php artisan migrate
+```
+
+#### Deshacer las últimas migraciones:
+```bash
+php artisan migrate:rollback
+```
+
+#### Compilar assets: 
+```bash
+npm run dev o npm run prod
+```
+
+
+### Problemas Comunes
+
+Migraciones fallidas: Revisa la configuración de la base de datos en el archivo .env
